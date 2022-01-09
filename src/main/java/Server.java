@@ -19,7 +19,7 @@ public class Server {
         ActorSystem actorSystem = ActorSystem.create("routes");
         final Http http = Http.get(actorSystem);
         final ActorMaterializer materializer = ActorMaterializer.create(actorSystem);
-        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createFlow()
+        final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow = createFlow(actorSystem, materializer, http);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost("localhost", 8080),
